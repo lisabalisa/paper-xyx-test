@@ -2,6 +2,8 @@ import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 import styles from '../styles/Home.module.css'
+import { PaperSDKProvider } from '@paperxyz/react-client-sdk/src/Provider'
+import { CheckoutWithCard } from '@paperxyz/react-client-sdk/src/components/CheckoutWithCard'
 
 const Home: NextPage = () => {
   return (
@@ -23,33 +25,24 @@ const Home: NextPage = () => {
         </p>
 
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h2>Documentation &rarr;</h2>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h2>Learn &rarr;</h2>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Examples &rarr;</h2>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h2>Deploy &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <PaperSDKProvider appName='Paper Checkout' chainName={'Rinkeby'}>
+            <CheckoutWithCard
+              // recipient address and the recipient email
+              // are all set in the checkoutSdkIntent
+              sdkClientSecret='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjb250cmFjdElkIjoiOTE0ZDZjM2ItMWY2Ny00NWU1LTk2OTQtYzQxNzBiMmM4NjhiIiwid2FsbGV0QWRkcmVzcyI6IjB4YzgxODZhMzA0NEQzMTFlZWMxQzFiNTczNDJBYWEyOTBGNmQ5MEFhNSIsImVtYWlsIjoibm8tcmVwbHlAcGFwZXIueHl6IiwicXVhbnRpdHkiOjEsIm1ldGFkYXRhIjp7fSwiZXhwaXJlc0luTWludXRlcyI6MTUsIm1pbnRNZXRob2QiOnsibmFtZSI6ImNsYWltVG8iLCJhcmdzIjp7Il90byI6IiRXQUxMRVQiLCJfcXVhbnRpdHkiOiIkUVVBTlRJVFkiLCJfdG9rZW5JZCI6MH0sImNhbGxPcHRpb25zIjp7Imdhc1ByaW9yaXR5IjoibWVkaXVtIn0sInBheW1lbnQiOnsiY3VycmVuY3kiOiJNQVRJQyIsInZhbHVlIjoiMC4wMDAxICAqICRRVUFOVElUWSJ9fSwicHJpY2luZ0RldGFpbHMiOnsiY2hhaW5OYW1lIjoiTXVtYmFpIiwiY3VycmVuY3lBZGRyZXNzIjoiMHgwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwMDAwIiwiY3VycmVuY3lTeW1ib2wiOiJNQVRJQyIsInJlYWRhYmxlUHJpY2UiOiIwLjAwMDEiLCJwcmljZUluV2VpIjp7InR5cGUiOiJCaWdOdW1iZXIiLCJoZXgiOiIweDVhZjMxMDdhNDAwMCJ9LCJsb2NrZWRQcmljZVVzZENlbnRzIjowfSwidHJhbnNhY3Rpb25JZCI6ImZjZWYxY2ZlLTIyNzctNDdmZi04N2FiLTcwMjI2MDNhZjA0OCIsImlhdCI6MTY2MjUzMTY4NSwiZXhwIjoxNjYyNTMyNTg1LCJpc3MiOiJwYXBlci54eXoifQ.DfTXfq2j8FadHMmaxV4YzrQVGllduCl34giVeYlHFaI'
+              onPaymentSuccess={(result) => {
+                console.log('Payment success', result)
+              }}
+              // onReview={(result) => ...}
+              // onError={(error) => ...}
+              options={{
+                colorBackground: '#ffffff',
+                colorPrimary: '#7300a8',
+                colorText: '#232323',
+                borderRadius: 6,
+              }}
+            />
+          </PaperSDKProvider>
         </div>
       </main>
 
